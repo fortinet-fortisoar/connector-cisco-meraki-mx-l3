@@ -1,0 +1,137 @@
+{
+  "name": "cisco-meraki-mx-l3",
+  "label": "Cisco Meraki MX L3 Firewall",
+  "version": "1.0.0",
+  "description": "Cisco Meraki MX L3 Firewall gives administrators complete control over the users, content, and applications on their network. This connector facilitates automated operations to fetch firewall rules, update the firewall rules etc.",
+  "publisher": "Fortinet",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "category": "Firewall",
+  "icon_small_name": "small.png",
+  "icon_large_name": "large.png",
+  "ingestion_supported": false,
+  "help_online": "",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server URL",
+        "description": "Service based URI to which you will connect and perform the automated operations.",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "name": "server_url",
+        "value": "api.meraki.com"
+      },
+      {
+        "title": "API Key",
+        "description": "API key configured for your account for using the Cisco Meraki API.",
+        "tooltip": "API key configured for your account for using the Cisco Meraki API.",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "password",
+        "name": "api_key"
+      },
+      {
+        "title": "Verify SSL",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. <br />By default, this option is set as True.",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "value": true
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "get_network_appliance_firewall_rules",
+      "title": "Get Network Appliance Firewall L3 Firewall Rules",
+      "description": "Retrieves a list of MX L3 firewall rules for a specific MX network based on the Network ID you have specified.",
+      "category": "investigation",
+      "annotation": "get_network_appliance_firewall_rules",
+      "endpoint": "/networks/{networkId}/appliance/firewall/l3FirewallRules",
+      "http_method": "GET",
+      "handler_method": false,
+      "output_schema": {
+        "rules": [
+          {
+            "comment": "",
+            "policy": "",
+            "protocol": "",
+            "destPort": "",
+            "destCidr": "",
+            "srcPort": "",
+            "srcCidr": "",
+            "syslogEnabled": ""
+          }
+        ]
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Network ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "networkId",
+          "value": "",
+          "tooltip": "ID of the MX network.",
+          "description": "Specify the ID of the MX network for which to retrieve the list of MX L3 firewall rules."
+        }
+      ]
+    },
+    {
+      "operation": "update_network_appliance_firewall_rules",
+      "title": "Update Network Appliance Firewall L3 Firewall Rules",
+      "description": "Updates the MX L3 firewall rules for a specific MX network based on the Network ID and rules you have specified.",
+      "category": "investigation",
+      "annotation": "update_network_appliance_firewall_rules",
+      "endpoint": "/networks/{networkId}/appliance/firewall/l3FirewallRules",
+      "http_method": "PUT",
+      "handler_method": false,
+      "output_schema": {
+        "rules": [
+          {
+            "comment": "",
+            "policy": "",
+            "protocol": "",
+            "destPort": "",
+            "destCidr": "",
+            "srcPort": "",
+            "srcCidr": "",
+            "syslogEnabled": ""
+          }
+        ]
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Network ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "networkId",
+          "value": "",
+          "tooltip": "ID of the MX network.",
+          "description": "Specify the ID of the MX network whose L3 firewall rules are to be updated."
+        },
+        {
+          "title": "Rules",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "json",
+          "name": "rules",
+          "value": "",
+          "tooltip": "{\"rules\": [{\"comment\": \"Allow TCP traffic to subnet with HTTP servers.\",\"policy\": \"allow\",\"protocol\": \"tcp\",\"destPort\": 443,\"destCidr\": \"192.168.1.0/24\",\"srcPort\": \"Any\",\"srcCidr\": \"Any\",\"syslogEnabled\": false}]}",
+          "description": "Specify an ordered array of the MX L3 firewall rules to update on the specified MX network. Fox example: {\"rules\": [{\"comment\": \"Allow TCP traffic to subnet with HTTP servers.\",\"policy\": \"allow\",\"protocol\": \"tcp\",\"destPort\": 443,\"destCidr\": \"192.168.1.0/24\",\"srcPort\": \"Any\",\"srcCidr\": \"Any\",\"syslogEnabled\": false}]}"
+        }
+      ]
+    }
+  ]
+}
