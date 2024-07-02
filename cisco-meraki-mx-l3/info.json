@@ -21,7 +21,8 @@
         "visible": true,
         "type": "text",
         "name": "server_url",
-        "value": "api.meraki.com"
+        "value": "api.meraki.com",
+        "tooltip": "Service based URI to which you will connect and perform the automated operations."
       },
       {
         "title": "API Key",
@@ -31,7 +32,8 @@
         "editable": true,
         "visible": true,
         "type": "password",
-        "name": "api_key"
+        "name": "api_key",
+        "tooltip": "API key configured for your account for using the Cisco Meraki API."
       },
       {
         "title": "Verify SSL",
@@ -52,9 +54,6 @@
       "description": "Retrieves a list of MX L3 firewall rules for a specific MX network based on the Network ID you have specified.",
       "category": "investigation",
       "annotation": "get_network_appliance_firewall_rules",
-      "endpoint": "/networks/{networkId}/appliance/firewall/l3FirewallRules",
-      "http_method": "GET",
-      "handler_method": false,
       "output_schema": {
         "rules": [
           {
@@ -90,9 +89,6 @@
       "description": "Updates the MX L3 firewall rules for a specific MX network based on the Network ID and rules you have specified.",
       "category": "investigation",
       "annotation": "update_network_appliance_firewall_rules",
-      "endpoint": "/networks/{networkId}/appliance/firewall/l3FirewallRules",
-      "http_method": "PUT",
-      "handler_method": false,
       "output_schema": {
         "rules": [
           {
@@ -116,20 +112,89 @@
           "visible": true,
           "type": "text",
           "name": "networkId",
-          "value": "",
           "tooltip": "ID of the MX network.",
           "description": "Specify the ID of the MX network whose L3 firewall rules are to be updated."
         },
         {
-          "title": "Rules",
+          "title": "Policy",
           "required": true,
           "editable": true,
           "visible": true,
-          "type": "json",
-          "name": "rules",
-          "value": "",
-          "tooltip": "{\"rules\": [{\"comment\": \"Allow TCP traffic to subnet with HTTP servers.\",\"policy\": \"allow\",\"protocol\": \"tcp\",\"destPort\": 443,\"destCidr\": \"192.168.1.0/24\",\"srcPort\": \"Any\",\"srcCidr\": \"Any\",\"syslogEnabled\": false}]}",
-          "description": "Specify an ordered array of the MX L3 firewall rules to update on the specified MX network. Fox example: {\"rules\": [{\"comment\": \"Allow TCP traffic to subnet with HTTP servers.\",\"policy\": \"allow\",\"protocol\": \"tcp\",\"destPort\": 443,\"destCidr\": \"192.168.1.0/24\",\"srcPort\": \"Any\",\"srcCidr\": \"Any\",\"syslogEnabled\": false}]}"
+          "type": "text",
+          "name": "policy",
+          "tooltip": "Specify 'allow' or 'deny' traffic specified by this rule.",
+          "description": "Specify the 'allow' or 'deny' traffic specified by this rule."
+        },
+        {
+          "title": "Protocol",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "protocol",
+          "tooltip": "Specify the The type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'.",
+          "description": "Specify the The type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'."
+        },
+        {
+          "title": "Source IP Address(es)",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "srcCidr",
+          "tooltip": "Source IP address(es) (in IP or CIDR notation), fully-qualified domain names (FQDN) or 'any'. (note: FQDN not supported for source addresses)",
+          "description": "Specify the source IP address(es) (in IP or CIDR notation), fully-qualified domain names (FQDN) or 'any' whose L3 firewall rules are to be updated. (note: FQDN not supported for source addresses)"
+        },
+        {
+          "title": "Destination IP Address(es)",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "destCidr",
+          "tooltip": "Destination IP address(es) (in IP or CIDR notation), fully-qualified domain names (FQDN) or 'any'.",
+          "description": "Specify the destination IP address(es) (in IP or CIDR notation), fully-qualified domain names (FQDN) or 'any' whose L3 firewall rules are to be updated."
+        },
+        {
+          "title": "Source Port(s)",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "srcPort",
+          "tooltip": "Source port(s) (integer in the range 1-65535), or 'any'.",
+          "description": "Specify the source port(s) (integer in the range 1-65535), or 'any' whose L3 firewall rules are to be updated."
+        },
+        {
+          "title": "Destination Port(s)",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "destPort",
+          "tooltip": "Destination port(s) (integer in the range 1-65535), or 'any'.",
+          "description": "Specify the destination port(s) (integer in the range 1-65535), or 'any' whose L3 firewall rules are to be updated."
+        },
+        {
+          "title": "Comment",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "comment",
+          "tooltip": "Description of the rule.",
+          "description": "Specify the description of the rule whose L3 firewall rules are to be updated."
+        },
+        {
+          "title": "Syslog Enabled",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "checkbox",
+          "name": "syslogEnabled",
+          "value": false,
+          "tooltip": "Log this rule to syslog (true or false, boolean value) - only applicable if a syslog has been configured.",
+          "description": "Specify to log this rule to syslog (true or false, boolean value) - only applicable if a syslog has been configured."
         }
       ]
     }

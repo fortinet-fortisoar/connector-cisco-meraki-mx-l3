@@ -12,82 +12,89 @@ from connectors.core.connector import get_logger, ConnectorError
 logger = get_logger('cisco_meraki_mx_l3_firewall')
 
 
-def get_curr_oper_info(info_json, action):
-    try:
-        operations = info_json.get('operations')
-        exec_action = [action_info for action_info in operations if action_info['operation'] == action]
-        return exec_action[0]
-
-    except Exception as err:
-        logger.error("{0}".format(str(err)))
-        raise ConnectorError("{0}".format(str(err)))
-
-
-def api_request(config, params, action):
-    try:
-        data = None
-        server_url = config.get('server_url')
-        if not server_url.startswith('https://'):
-            server_url = 'https://' + server_url
-        if not server_url.endswith('/'):
-            server_url = '{0}/api/v1/'.format(server_url)
-
-        headers = {'Authorization': "Bearer " + config.get('api_key'),
-                   'Accept':  'application/json'}
-
-        if action['endpoint'] == "":
-            endpoint = server_url
+class CiscoMeraki:
+    def __init__(self, config):
+        self.base_url = config.get("server_url")
+        if self.base_url.startswith('https://') or self.base_url.startswith('http://'):
+            self.base_url = self.base_url.strip('/')
         else:
-            url = action['endpoint']
-            endpoint = server_url + url.format(networkId=params.get("networkId"))
+            self.base_url = 'https://{0}'.format(self.base_url.strip('/'))
+        self.api_key = config.get("api_key")
+        self.verify_ssl = config.get("verify_ssl")
 
-        if action["http_method"] == "PUT":
-            data = params.get("rules")
-
+    def make_request(self, endpoint, headers=None, params=None, data=None, method='GET'):
         try:
-            response = request(action["http_method"], endpoint, headers=headers, data=data,
-                               verify=config.get('verify_ssl'))
+            headers = {'Authorization': "Bearer " + self.get('api_key'), 'Accept':  'application/json'}
+            url = '{0}{1}{2}'.format(self.base_url, '/api/v1/', endpoint)
+            logger.info('Request URL {0}'.format(url))
+            response = requests.request(method, url, data=data, headers=headers, verify=self.verify_ssl, params=params)
 
-            if response.status_code != 200 and response.status_code != 201:
-                err_msg = "Status Code: {0} Details: {1}".format(response.status_code, response.reason)
-                raise ConnectorError(err_msg)
-
-            try:
-                return response.json()
-            except Exception as e:
-                logger.error(e)
-                raise ConnectorError(e)
-
-        except req_exceptions.SSLError:
-            logger.error('An SSL error occurred')
-            raise ConnectorError('An SSL error occurred')
-        except req_exceptions.ConnectionError:
-            logger.error('A connection error occurred')
-            raise ConnectorError('A connection error occurred')
-        except req_exceptions.Timeout:
-            logger.error('The request timed out')
-            raise ConnectorError('The request timed out')
-        except req_exceptions.RequestException:
-            logger.error('There was an error while handling the request')
-            raise ConnectorError('There was an error while handling the request')
+            if response.status_code in [200, 201, 204, 206]:
+                if response.text != "":
+                    return response.json()
+                else:
+                    return True
+            elif response.status_code == 404:
+                return response
+            else:
+                if response.text != "":
+                    err_resp = response.json()
+                    failure_msg = err_resp['ERROR_DESCRIPTION']
+                    error_msg = 'Response [{0}:{1} Details: {2}]'.format(response.status_code, response.reason,
+                                                                         failure_msg if failure_msg else '')
+                else:
+                    error_msg = 'Response [{0}:{1}]'.format(response.status_code, response.reason)
+                logger.error(error_msg)
+                raise ConnectorError(error_msg)
+        except requests.exceptions.SSLError as e:
+            logger.exception('{}'.format(e))
+            raise ConnectorError('{}'.format(self.error_msg['ssl_error']))
+        except requests.exceptions.ConnectionError as e:
+            logger.exception('{}'.format(e))
+            raise ConnectorError('{}'.format(self.error_msg['time_out']))
         except Exception as e:
-            logger.error(e)
-            raise ConnectorError(e)
+            logger.exception('{}'.format(e))
+            raise ConnectorError('{}'.format(e))
 
-    except Exception as err:
-        raise ConnectorError(str(err))
+    def build_payload(self, params):
+        result = {k: v for k, v in params.items() if v is not None and v != ''}
+        return result
+
+
+def get_network_appliance_firewall_rules(config, params):
+    obj = CiscoMeraki(config)
+    networkId = params.get("networkId")
+    response = obj.make_request(endpoint='/networks/{networkId}/appliance/firewall/l3FirewallRules'.format(networkId=networkId))
+    return response
+
+
+def update_network_appliance_firewall_rules(config, params):
+    obj = CiscoMeraki(config)
+    networkId = params.get('networkId')
+    params.pop('networkId')
+    params = obj.build_payload(params)
+    response = obj.make_request(endpoint='/networks/{networkId}/appliance/firewall/l3FirewallRules'.format(networkId=networkId), data=params)
+    return response
 
 
 def check_health(config):
     try:
-        action = dict()
-        action["http_method"] ="GET"
-        action["endpoint"] = ""
-        resp= api_request(config, params={}, action=action)
-        if resp:
+        obj = CiscoMeraki(config)
+        server_response = obj.make_request(endpoint='/organizations')
+        if server_response:
             return True
+    except Exception as err:
+        logger.error("{0}".format(str(err)))
+        raise ConnectorError(str(err))
 
-    except Exception as e:
-        logger.error(e)
-        raise ConnectorError(e)
+
+
+operations = {
+    "get_network_appliance_firewall_rules": get_network_appliance_firewall_rules,
+    "update_network_appliance_firewall_rules": update_network_appliance_firewall_rules
+}
+
+
+
+
 
