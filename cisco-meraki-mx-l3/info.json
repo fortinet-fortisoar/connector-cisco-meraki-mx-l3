@@ -10,7 +10,7 @@
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "ingestion_supported": false,
-  "help_online": "",
+  "help_online": "https://github.com/fortinet-fortisoar/connector-cisco-meraki-mx-l3/blob/release/1.0.0/docs/ciscomerakimxl3.md",
   "configuration": {
     "fields": [
       {
