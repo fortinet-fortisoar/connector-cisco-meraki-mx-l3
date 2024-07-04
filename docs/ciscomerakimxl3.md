@@ -64,7 +64,7 @@ The output contains the following populated JSON schema:
 #### Input parameters
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Network ID</td><td>Specify the ID of the MX network whose L3 firewall rules are to be updated.
 </td></tr><tr><td>Policy</td><td>Specify the 'allow' or 'deny' traffic specified by this rule.
-</td></tr><tr><td>Protocol</td><td>Specify the The type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'.
+</td></tr><tr><td>Protocol</td><td>Specify the type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'.
 </td></tr><tr><td>Source IP Address(es)</td><td>Specify the source IP address(es) (in IP or CIDR notation), fully-qualified domain names (FQDN) or 'any' whose L3 firewall rules are to be updated. (note: FQDN not supported for source addresses)
 </td></tr><tr><td>Destination IP Address(es)</td><td>Specify the destination IP address(es) (in IP or CIDR notation), fully-qualified domain names (FQDN) or 'any' whose L3 firewall rules are to be updated.
 </td></tr><tr><td>Source Port(s)</td><td>(Optional) Specify the source port(s) (integer in the range 1-65535), or 'any' whose L3 firewall rules are to be updated.

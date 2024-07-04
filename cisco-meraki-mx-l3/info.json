@@ -132,8 +132,8 @@
           "visible": true,
           "type": "text",
           "name": "protocol",
-          "tooltip": "Specify the The type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'.",
-          "description": "Specify the The type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'."
+          "tooltip": "Specify the type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'.",
+          "description": "Specify the type of protocol. e.g. 'tcp', 'udp', 'icmp', 'icmp6' or 'any'."
         },
         {
           "title": "Source IP Address(es)",
