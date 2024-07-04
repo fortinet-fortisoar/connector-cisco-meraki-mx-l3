@@ -1,0 +1,159 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "uuid": "f1b73f9a-f55c-4ee0-b288-0ec94b9e72d0",
+      "@type": "WorkflowCollection",
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "uuid": "aa3547d8-1910-47d8-9e8a-8c9742ee2cc1",
+          "collection": "/api/3/workflow_collections/f1b73f9a-f55c-4ee0-b288-0ec94b9e72d0",
+          "steps": [
+            {
+              "uuid": "da2608ae-548b-40d3-a6a9-4194a2ad93cb",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62"
+            },
+            {
+              "uuid": "b4449dee-899f-49ae-a3bd-54cfa17c572a",
+              "@type": "WorkflowStep",
+              "name": "Get Network Appliance Firewall L3 Firewall Rules",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Cisco Meraki MX L3 Firewall",
+                "config": "",
+                "params": {
+                  "networkId": ""
+                },
+                "version": "1.0.0",
+                "connector": "cisco-meraki-mx-l3-firewall",
+                "operation": "get_network_appliance_firewall_rules",
+                "operationTitle": "Get Network Appliance Firewall L3 Firewall Rules"
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "triggerLimit": null,
+          "description": "Retrieves a list of MX L3 firewall rules for a specific MX network based on the Network ID you have specified.",
+          "name": "Get Network Appliance Firewall L3 Firewall Rules",
+          "tag": "#Cisco Meraki MX L3 Firewall",
+          "recordTags": [
+            "Cisco",
+            "cisco-meraki-mx-l3-firewall"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/da2608ae-548b-40d3-a6a9-4194a2ad93cb",
+          "routes": [
+            {
+              "uuid": "130c829d-84d7-41fe-84b1-5193510c7f18",
+              "@type": "WorkflowRoute",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Network Appliance Firewall L3 Firewall Rules",
+              "sourceStep": "/api/3/workflow_steps/da2608ae-548b-40d3-a6a9-4194a2ad93cb",
+              "targetStep": "/api/3/workflow_steps/b4449dee-899f-49ae-a3bd-54cfa17c572a"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "aae7bab1-7edf-42d7-98f4-e801854ba2c2",
+          "collection": "/api/3/workflow_collections/f1b73f9a-f55c-4ee0-b288-0ec94b9e72d0",
+          "steps": [
+            {
+              "uuid": "532c3389-64b0-488b-8fed-60d9cf9a1487",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62"
+            },
+            {
+              "uuid": "967e7d1c-ce7f-4546-a0db-cd6d4d13f804",
+              "@type": "WorkflowStep",
+              "name": "Update Network Appliance Firewall L3 Firewall Rules",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Cisco Meraki MX L3 Firewall",
+                "config": "",
+                "params": {
+                  "networkId": "",
+                  "rules": ""
+                },
+                "version": "1.0.0",
+                "connector": "cisco-meraki-mx-l3-firewall",
+                "operation": "update_network_appliance_firewall_rules",
+                "operationTitle": "Update Network Appliance Firewall L3 Firewall Rules"
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "triggerLimit": null,
+          "description": "Updates the MX L3 firewall rules for a specific MX network based on the Network ID and rules you have specified.",
+          "name": "Update Network Appliance Firewall L3 Firewall Rules",
+          "tag": "#Cisco Meraki MX L3 Firewall",
+          "recordTags": [
+            "Cisco",
+            "cisco-meraki-mx-l3-firewall"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/532c3389-64b0-488b-8fed-60d9cf9a1487",
+          "routes": [
+            {
+              "uuid": "416f083e-451e-4d6f-917e-b1e000f72d1d",
+              "@type": "WorkflowRoute",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Update Network Appliance Firewall L3 Firewall Rules",
+              "sourceStep": "/api/3/workflow_steps/532c3389-64b0-488b-8fed-60d9cf9a1487",
+              "targetStep": "/api/3/workflow_steps/967e7d1c-ce7f-4546-a0db-cd6d4d13f804"
+            }
+          ]
+        }
+      ],
+      "name": "Sample - Cisco Meraki MX L3 Firewall - 1.0.0",
+      "description": "Cisco Meraki MX L3 Firewall gives administrators complete control over the users, content, and applications on their network. This connector facilitates automated operations to fetch firewall rules, update the firewall rules etc.",
+      "visible": true,
+      "recordTags": [
+        "Cisco",
+        "cisco-meraki-mx-l3-firewall"
+      ]
+    }
+  ]
+}
