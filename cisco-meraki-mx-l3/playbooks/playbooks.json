@@ -40,7 +40,7 @@
                   "networkId": ""
                 },
                 "version": "1.0.0",
-                "connector": "cisco-meraki-mx-l3-firewall",
+                "connector": "cisco-meraki-mx-l3",
                 "operation": "get_network_appliance_firewall_rules",
                 "operationTitle": "Get Network Appliance Firewall L3 Firewall Rules"
               },
@@ -55,7 +55,7 @@
           "tag": "#Cisco Meraki MX L3 Firewall",
           "recordTags": [
             "Cisco",
-            "cisco-meraki-mx-l3-firewall"
+            "cisco-meraki-mx-l3"
           ],
           "isActive": false,
           "debug": false,
@@ -111,7 +111,7 @@
                   "rules": ""
                 },
                 "version": "1.0.0",
-                "connector": "cisco-meraki-mx-l3-firewall",
+                "connector": "cisco-meraki-mx-l3",
                 "operation": "update_network_appliance_firewall_rules",
                 "operationTitle": "Update Network Appliance Firewall L3 Firewall Rules"
               },
@@ -126,7 +126,7 @@
           "tag": "#Cisco Meraki MX L3 Firewall",
           "recordTags": [
             "Cisco",
-            "cisco-meraki-mx-l3-firewall"
+            "cisco-meraki-mx-l3"
           ],
           "isActive": false,
           "debug": false,
@@ -152,7 +152,7 @@
       "visible": true,
       "recordTags": [
         "Cisco",
-        "cisco-meraki-mx-l3-firewall"
+        "cisco-meraki-mx-l3"
       ]
     }
   ]
